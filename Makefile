@@ -407,6 +407,10 @@ KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS_MODULE  := -DMODULE
 KBUILD_CFLAGS_MODULE  := -DMODULE
 KBUILD_LDFLAGS_MODULE := -T $(srctree)/scripts/module-common.lds
+TARGET_BUILD_VARIANT := user
+VENDOR_EDIT := 1
+TARGET_PRODUCT := full_oppo6765
+ODM_WT_EDIT := yes
 GCC_PLUGINS_CFLAGS :=
 
 #ifdef VENDOR_EDIT
@@ -582,6 +586,10 @@ export KBUILD_AFLAGS AFLAGS_KERNEL AFLAGS_MODULE
 export KBUILD_AFLAGS_MODULE KBUILD_CFLAGS_MODULE KBUILD_LDFLAGS_MODULE
 export KBUILD_AFLAGS_KERNEL KBUILD_CFLAGS_KERNEL
 export KBUILD_ARFLAGS
+export TARGET_BUILD_VARIANT
+export TARGET_PRODUCT
+export VENDOR_EDIT
+export ODM_WT_EDIT
 
 # When compiling out-of-tree modules, put MODVERDIR in the module
 # tree rather than in the kernel tree. The kernel tree might
@@ -950,6 +958,9 @@ KBUILD_CFLAGS += $(call cc-option, -mno-global-merge,)
 KBUILD_CFLAGS += $(call cc-option, -fcatch-undefined-behavior)
 KBUILD_CFLAGS += $(call cc-option, -no-integrated-as)
 KBUILD_AFLAGS += $(call cc-option, -no-integrated-as)
+KBUILD_CFLAGS += $(call cc-option, -fno-builtin-bcmp)
+KBUILD_AFLAGS += $(call cc-option, -fno-builtin-bcmp)
+
 else
 
 # These warnings generated too much noise in a regular build.
