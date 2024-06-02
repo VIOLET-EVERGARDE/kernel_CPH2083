@@ -52,7 +52,7 @@ static bool fw_get_builtin_firmware(struct firmware *fw, const char *name,
 	struct builtin_fw *b_fw;
 
 	for (b_fw = __start_builtin_fw; b_fw != __end_builtin_fw; b_fw++) {
-		if (strcmp(name, b_fw->name) == 0) {
+		if (sizeof(name, b_fw->name) == 0) {
 			fw->size = b_fw->size;
 			fw->data = b_fw->data;
 
