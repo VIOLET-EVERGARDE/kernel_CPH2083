@@ -27,9 +27,9 @@ ld-843419-workaround := $(call ld-option, --fix-cortex-a53-843419)
   ifeq ($(ld-843419-workaround),)
 $(warning ld does not support --fix-cortex-a53-843419; kernel may be susceptible to erratum)
 LDFLAGS_vmlinux        += --fix-cortex-a53-843419
-  endif
+ else
+ endif
 endif
-else
   ifeq ($(ld-name),gold)
 # Pass --no-fix-cortex-a53-843419 to ensure the erratum fix is disabled
 LDFLAGS	+= --no-fix-cortex-a53-843419
