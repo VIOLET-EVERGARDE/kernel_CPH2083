@@ -23,13 +23,16 @@ LDFLAGS_vmlinux		+= -pie -shared -Bsymbolic \
 endif
 
 ifeq ($(CONFIG_ARM64_ERRATUM_843419),y)
-ld-843419-workaround := $(call ld-option, --fix-cortex-a53-843419)
-  ifeq ($(ld-843419-workaround),)
+  ifeq ($(call ld-option, --fix-cortex-a53-843419),)
 $(warning ld does not support --fix-cortex-a53-843419; kernel may be susceptible to erratum)
-LDFLAGS_vmlinux        += --fix-cortex-a53-843419
- else
- endif
-endif
+  else
+    ifeq ($(call gold-ifversion, -lt, 114000000, y), y)
+$(warning This version of GNU gold may generate incorrect code with --fix-cortex-a53-843419;\
+	see https://sourceware.org/bugzilla/show_bug.cgi?id=21491)
+    endif
+LDFLAGS_vmlinux	+= --fix-cortex-a53-843419
+  endif
+else
   ifeq ($(ld-name),gold)
 # Pass --no-fix-cortex-a53-843419 to ensure the erratum fix is disabled
 LDFLAGS	+= --no-fix-cortex-a53-843419
